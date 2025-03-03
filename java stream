@@ -1,0 +1,81 @@
+package dayseven;
+
+import java.util.ArrayList;
+import java.util.Comparator;
+import java.util.List;
+import java.util.stream.Collectors;
+
+class Student implements Comparable<Student>
+{
+	private int id;
+	private String name;
+	private int age;
+	
+	public int getId() {
+		return id;
+	}
+	public void setId(int id) {
+		this.id = id;
+	}
+	//////////////
+	public String getName() {
+		return name;
+	}
+	public void setName(String name) {
+		this.name = name;
+	}
+	///////////////	
+	public int getAge() {
+		return age;
+	}
+	public void setAge(int age) {
+		this.age = age;
+	}
+	//////////////////
+	public Student(int id,String name,int age)
+	{
+		this.id=id;
+		this.name=name;
+		this.age=age;
+	}
+	public String toString()
+	{
+		return "Name:"+name+" Id:"+id+" Age:"+age;
+	}
+	
+	public int compareTo(Student o)
+	{
+		return o.id-this.id;
+	}
+	
+}
+public class exp6 {
+
+	public static void main(String[] args) {
+		List<Student> StdList=new ArrayList<>();
+		StdList.add(new Student(7,"Siranjeevi",21));
+		StdList.add(new Student(6,"Ajay Kumar",22));
+		StdList.add(new Student(45,"Akhil",19));
+		StdList.add(new Student(3,"Dhanush",23));
+		StdList.add(new Student(77,"Madesh",27));
+		
+	
+		System.out.println("Before sorting");
+		StdList.forEach(std->System.out.println("Name:"+std.getName()+" Id:"+std.getId()+" Age:"+std.getAge()));
+		//java 8 new features- Stream API
+		
+		
+		List<Student> frmtData=StdList.stream().sorted(Comparator.comparing(Student::getId)).
+				collect(Collectors.toList());
+		
+		System.out.println("\n");
+		
+		System.out.println("After sorting");
+		for(Student s:frmtData)
+		{
+			System.out.println(s);
+		}
+		
+		
+	}
+}
