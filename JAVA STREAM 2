@@ -1,0 +1,87 @@
+package dayseven;
+
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
+import java.util.List;
+import java.util.stream.*;
+
+//using comparable and comparator for sorting the data based on id,name,age.
+//comparable is from java.lang.*...it is a functional interface.
+//public int compareTo(singleObject o);-only one object
+//these methods are used to sort with our own sorting criterias.
+
+class Customer implements Comparable<Customer>
+{
+	private int id;
+	private String name;
+	private String city;
+	
+	public int getId() {
+		return id;
+	}
+	public void setId(int id) {
+		this.id = id;
+	}
+	
+     ///////////////////
+	public String getName() {
+		return name;
+	}
+	public void setName(String name) {
+		name = name;
+	}
+	////////////////////
+	public String getCity() {
+		return city;
+	}
+	public void setCity(String city) {
+		this.city = city;
+	}
+	///////////////////////
+	
+	public Customer(int id,String name,String city)
+	{
+		this.id=id;
+		this.name=name;
+		this.city=city;
+	}
+	
+	@Override
+	public int compareTo(Customer o) {
+	return this.id-o.id;
+		
+	}
+}
+
+public class exp7 {
+	public static void main(String[] args) 
+	{
+		
+		
+		List<Customer> CusList=new ArrayList<>();
+		CusList.add(new Customer(7,"Siranjeevi","Coimbatore"));
+		CusList.add(new Customer(6,"Ajay Kumar","Trivandram"));
+		CusList.add(new Customer(45,"Akhil","Cochin"));
+		CusList.add(new Customer(3,"Dhanush","Hyderabad"));
+		CusList.add(new Customer(77,"Madesh","Chennai"));
+		
+		Collections.sort(CusList);
+		
+		CusList.forEach(cst->System.out.println(cst.getName()+" "+cst.getId()+" "+cst.getCity()));
+	
+	System.out.println("\n");
+	//using stream API to print names with filter methods like...name starts with "X".
+		/*CusList.stream().
+		filter(cst->cst.getName().startsWith("A")).
+		forEach(dt->System.out.println(dt));;
+		System.out.println("\n");*/
+		
+		CusList.parallelStream().sorted(Comparator.comparing(Customer::getName)).forEach(cst-> System.out.println(cst.getId()+" "+cst.getName()+" "+cst.getCity()));
+		System.out.println("\n");
+	List<Customer> frmtData=CusList.stream().sorted(Comparator.comparing(Customer::getName)).
+			collect(Collectors.toList());
+	frmtData.forEach(cst->System.out.println(cst.getId()+" "+cst.getName()+" "+cst.getCity()));
+	}
+
+}
